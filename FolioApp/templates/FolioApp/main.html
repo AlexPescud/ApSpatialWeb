@@ -45,121 +45,16 @@
 <!-- D3 Code to make a map -->
 
 <script type="text/javascript">
-/*
-    var margin = {top: 10, left: 10, bottom: 10, right: 10}
-        , width = parseInt(d3.select('#map').style('width'))
-        , width = width - margin.left - margin.right
-        , mapRatio = .5
-        , height = width * mapRatio;
-
-    console.log(width)
-
-    var projection = d3.geoBoggs()
-        .scale(width)
-        .translate([width / 2, height / 2]);
-        //.fitSize([width,height],countries);
-
-    var pathGenerator = d3.geoPath()
-        .projection(projection);  
-    
-    d3.select(window).on('resize', resize);
-
-
-    //create graticles
-    const graticule = d3.geoGraticule();
-
-
-    d3.json("{% static '/geo/world110.json' %}")
-        .then(function(data){ 
-            // Convert topojson to usable in d3
-            var countries = topojson.feature(data, data.objects.countries).features 
-            var countriesCollection = topojson.feature(data, data.objects.countries)
-            console.log(countriesCollection)
-            console.log(countries)
-            projection.fitSize([width,height],countriesCollection);
-
-            // Create SVG and group "g"
-            var svg = d3.select("#map")
-                .append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g");   
-            // Draw Map
-            svg.selectAll(".country")
-                .data(countries)
-                .enter().append("path")
-                .attr("class", "country")
-                .attr("d", pathGenerator)
-                //add class 'selected'
-                .on('mouseover', function(d){
-                    d3.select(this).classed("selected", true)
-                        .style("fill", function() {
-                            return "hsl(" + Math.random() * 360 + ",100%,75%)";
-                            })
-                        .transition()
-                            .duration(500)
-                            .ease(d3.easeElasticIn)
-                            .style("fill", "black");
-                })
-                //remove class 'selected'
-                //.on('mouseout', function(d){
-                    //d3.select(this).classed("selected", false)
-                //});
-        });
-
-
-    function resize() {
-        console.log("window resized")
-            // adjust things when the window size changes
-            width = parseInt(d3.select('#map').style('width'));
-            width = width - margin.left - margin.right;
-            height = width * mapRatio;
-
-            // update projection
-            projection
-                .translate([width / 2, height / 2])
-                .scale(width)
-                .fitSize([width,height],countriesCollection);
-
-            var svg = d3.select("#map")
-            // resize the map container
-            svg
-                .style('width', width + 'px')
-                .style('height', height + 'px');
-
-            // resize the map
-            svg.selectAll('.countries').attr('d', pathGenerator);
-    }
-
-    /*
-    function resize() {
-        width = parseInt(d3.select('map').style('width', width));
-        width = $(window).width() * .97;
-        height = width/1.85;
-    
-        projection
-            .scale([width/3.5])
-            .translate([width/1,height*1.4]);
-
-        
-    d3.select("map").attr("width",width).attr("height",height);
-    //d3.select("svg").attr("width",width).attr("height",height);
-    
-    d3.selectAll("path").attr('d', path);
-        // resize the map
-        //map.selectAll('.countries').attr('d', path);
-    }
-    */
-
-    // End Responsive rectanlge
-
-
 
     var width = document.getElementById('map').clientWidth;
+    //var width = 980;
+    //var height = 1160;
     //console.log(width)
     //this allows us to collect the width of the div where the SVG will go.
-    var height = width / 2;//3.236;
+    var height = width / 3.236;//3.236;
     //I like to use the golden rectangle ratio if they work for my charts.
+
+    margin = Math.min(width, height)/10
 
     // Create SVG and group "g"
     var svg = d3.select("#map")
@@ -168,54 +63,146 @@
         .attr("height", height)
         .append("g");
 
-    // Create projection
-    var projection = d3.geoFoucaut() // pick projection here geoBoggs geoCraig
-        .translate([ width / 2, height / 2])
-        .scale(120) //use scale to zoom in and out
-        //.center([-73.94, 40.70]); // long, lat of NYC
-
-    //Create a geo path generator using the projection above
-    var pathGenerator = d3.geoPath()
-        .projection(projection);
-
-
-    //create graticles
-    const graticule = d3.geoGraticule();
-
-    console.log(graticule)
-
-
     //Loading GeoJSON data
-    d3.json("{% static '/geo/world110.json' %}")
-        .then(function(data){ 
-            //console.log(data)
+    d3.json("{% static '/geo/world110.json' %}").then(function(data){ 
 
-            // Convert topojson to usable in d3
-            var countries = topojson.feature(data, data.objects.countries).features 
+            //console.log(data)
+            var countries = topojson.feature(data, data.objects.countries);
+
             //console.log(countries)
 
-            svg.selectAll(".country")
-                .data(countries)
+            var projection = d3.geoOrthographic() // pick projection here geoBoggs geoCraig geoFoucaut
+                //.fitExtent([[20, 20],[960,600]], countries);
+                .fitExtent([[margin, margin],[width-margin, height - margin]], countries)
+                //.clipAngle(90);
+                //.center([0, 55.4])
+                //.rotate([150, 0])
+                //.parallels([50, 60])
+                //.scale(300) //use scale to zoom in and out
+                //.translate([width / 2, height / 2])
+
+            var pathGenerator = d3.geoPath()
+                .projection(projection)    
+
+            svg.selectAll("path")
+                .data(topojson.feature(data, data.objects.countries).features)
                 .enter().append("path")
-                .attr("class", "country")
                 .attr("d", pathGenerator)
-                //add class 'selected'
+                .attr("class", "countries")
+                .style("fill", "#ffffff")
                 .on('mouseover', function(d){
                     d3.select(this).classed("selected", true)
                         .style("fill", function() {
-                            return "hsl(" + Math.random() * 360 + ",100%,75%)";
+                           return "hsl(" + Math.random() * 360 + ",100%,75%)";
                             })
                         .transition()
                             .duration(500)
                             .ease(d3.easeElasticIn)
                             .style("fill", "black");
                 })
+                
+
+            //create graticles
+            //const graticule = d3.geoGraticule();
+            //console.log(graticule.lines())
+
+            // Graticule lines (behind the land)
+            //svg.selectAll("path")
+                //.data(graticule.lines())
+                //.enter().append("path")
+                //.attr("d", pathGenerator)
+                //.attr("class", "graticule");
+                
+
+            //svg.append("path")
+                //.datum(graticule.outline)
+                //.attr("class", "graticule-outline")
+                //.attr("d", pathGenerator);      
+
+            let rotate = [0, 0];
+            let velocity = [0.05, 0];
+            let time = Date.now();
+            //console.log(time)
+            //Trigger Spinning Globe
+            spinning_globe()
+
+            // Spinning globe setup and function
+            
+            function spinning_globe(){
+
+                d3.timer(function() {
+                    // get current time
+                    var dt = Date.now() - time;
+                    //console.log("dt", dt)
+
+                    // get the new position from modified projection function
+                    projection.rotate([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt]);
+                    //projection.rotate.rotate([0, 0]);
+                    //console.log(projection.rotate)
+                    // update layers position and redraw
+                    svg.selectAll("path.countries").attr("d", pathGenerator);
+                    //svg.selectAll("path.graticule").attr("d", pathGenerator);
+                    //svg.selectAll("path.graticule-outline").attr("d", pathGenerator);
+
+                })};
+
+
+
+            });
+            
+
+                //We will build a basic function to handle window resizing.
+            function resize() {
+                width = document.getElementById('map').clientWidth;
+                height = width / 3.236;
+                //console.log("width: ", width)
+                //console.log("height: ", height)
+                d3.select('#map svg')
+                .attr('width', width)
+                .attr('height', height);
+            }   
+            
+            //Call our resize function if the window size is changed.
+            window.onresize = resize;
+
+
+
+
+
+
+            /*
+
+            //create graticles
+            //const graticule = d3.geoGraticule();
+
+            svg.selectAll(".country")
+                //.data(countries)
+                .data(topojson.feature(data, data.objects.countries).features)
+                .enter()
+                .append("path")
+                .attr("class", "country")
+                .attr("d", pathGenerator)
+                .attr("stroke", "#000000")
+                .attr("fill", "#ffffff");   
+                //add class 'selected'
+                //.on('mouseover', function(d){
+                    //d3.select(this).classed("selected", true)
+                        //.style("fill", function() {
+                            //return "hsl(" + Math.random() * 360 + ",100%,75%)";
+                            //})
+                        //.transition()
+                            //.duration(500)
+                            //.ease(d3.easeElasticIn)
+                            //.style("fill", "black");
+                //})
                 //remove class 'selected'
                 //.on('mouseout', function(d){
                     //d3.select(this).classed("selected", false)
                 //});
         });
 
+        */
+    /*    
     // Graticule lines (behind the land)
     svg.selectAll(".graticule")
         .data(graticule.lines())
@@ -227,6 +214,7 @@
         .datum(graticule.outline)
         .attr("class", "graticule outline")
         .attr("d", pathGenerator);  
+    
         
 
     //We will build a basic function to handle window resizing.
@@ -238,9 +226,39 @@
         d3.select('#map svg')
         .attr('width', width)
         .attr('height', height);
-    }    
+    }   
+    
 
-window.onresize = resize;
+    //Trigger Spinning Globe
+    spinning_globe()
+
+    //Spinning Globe code
+
+    let rotate = [0, 0];
+    let velocity = [0.05, -0];
+    let time = Date.now();
+
+    function spinning_globe(){
+
+        d3.timer(function() {
+            // get current time
+            var dt = Date.now() - time;
+
+            // get the new position from modified projection function
+            projection.rotate([rotate[0] + 0.05 * dt, rotate[1] + velocity[1] * dt]);
+
+            // update layers position and redraw
+            g.selectAll("path.land").attr("d", pathGenerator);
+            svg.selectAll("g.homes").selectAll("circle").attr("d", pathGenerator)
+                .attr('cx', function(d) { return projection(d.geometry.coordinates)[0] })
+                .attr('cy', function(d) { return projection(d.geometry.coordinates)[1] });
+
+            //g.selectAll("path.blink").append("cirlce").attr("d", pathGenerator)
+            //svg.selectAll("path.grat").attr("d", pathGenerator);
+        })};
+          */  
+
+//window.onresize = resize;
 //Call our resize function if the window size is changed.
 
 

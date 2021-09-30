@@ -22,7 +22,7 @@ card {
 }
 */
 
-.graticule {
+path.graticule {
     stroke: #6e6363;
     fill: none;
 }
