@@ -1,0 +1,28 @@
+#logo {
+    }
+
+.list-group-item {
+    background-color:  rgb(248, 244, 237);
+    
+}
+
+card {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.country {
+    fill: #c4a915;
+    stroke: #6e6363;
+    stroke-width: 0.5;
+}
+
+/*
+.selected {
+    fill: #ebe4c1;
+}
+*/
+
+.graticule {
+    stroke: #6e6363;
+    fill: none;
+}
