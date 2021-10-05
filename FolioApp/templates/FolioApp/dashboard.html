@@ -5,22 +5,28 @@
 {% block content %}
 
 <br>
+<div class="row m-1" >
+    <div class="col-sm-6">
+      <div class="jumbotron" style="background-color:  #FADA5E;">
+      <h1 class="display-3">Professional Geospatial Services</h1>
+      <p class="lead">We develop, adapt and deploy <a style="color:black;" href="#Services"><b>Geographic Information Systems (GIS)</b></a> to empower teams and create value for businesses or organisations.</p>
+      <br>
+      <a href="#contact" type="button" class="btn btn-outline-dark  btn-lg">Get in touch</a>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <div id="map"></div>
+    </div>
 
-<div class="jumbotron" style="background-color:  #FADA5E;">
-  <h1 class="display-3">World Class Geospatial Services</h1>
-  <p class="lead">We delivery geospatial solutions to get the job done.</p>
-  <br>
-  <button type="button" class="btn btn-outline-dark  btn-lg">Get in touch</button>
-</div>
-
+  </div>
 
 
   <!-- What we offer start -->
-<div>
-    <h1 class="display-4 m-4">What we offer</h1>
+<div id="Services">
+    <h1 class="display-4 m-4">Our Services</h1>
 
     <p class="lead m-4">
-      We provide geospatial services to government, business and universities across Australia. We are software, vendor and platform agnostic. We work with a wide range or systems including desktop GIS, modile devices, server environments and cloud technology.  
+      <b>AP Spatial</b> provides GIS services to government, business and universities across Australia. We work with a wide range of software to unlock the potential of your location data.
     </p>
     <br>
 
@@ -30,7 +36,7 @@
           <div class="card-body">
             <h1><i class="fas fa-laptop-code d-flex justify-content-center"></i></h1>
             <h5 class="card-title text-center">Geospatial Automation</h5>
-            <p class="card-text">We provide top class assistance to build or improve your mission critical geospatial systems. We create reliable automations to replace your repetative tasks.</p>
+            <p class="card-text">We provide top class assistance to build or improve your mission critical geospatial systems. We create reliable automations to replace your repetitive tasks.</p>
             <ul class="list-group list-group-flush">
               <li class="list-group-item font-weight-bold"><a href="https://www.safe.com/partners/certification/wall-of-fame/" target="_blank">
                 <img src="{% static '/images/FME-Certified-Pro_RGB.png' %}" class="img-thumbnail " style="width: 70px; height: 70px">
@@ -48,7 +54,7 @@
             <div class="card-body">
               <h1><i class="fas fa-layer-group d-flex justify-content-center"></i></h1>
               <h5 class="card-title text-center">Maps + Visualisations</h5>
-              <p class="card-text">We provide value to your business by creating high quality deliverables. From building templates and layouts to full-feature web applications</p>
+              <p class="card-text">We provide value to your business by creating high quality deliverables from a variety of tools and platforms.</p>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item font-weight-bold">Desktop GIS (Open Source + Proprietry)</li>
                 <li class="list-group-item font-weight-bold">Web/mobile App Development</li>
@@ -65,14 +71,14 @@
               <div class="card-body">
                 <h1><i class="fas fa-chalkboard-teacher d-flex justify-content-center"></i></h1>
                 <h5 class="card-title text-center">Learning/Consultancy</h5>
-                <p class="card-text">We offer a range of services to upskill your team, stay relevant and knowledgable within the industry.</p>
+                <p class="card-text">We offer a range of services to upskill your team, stay relevant and knowledgeable within the industry.</p>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item font-weight-bold">Bespoke training packages</li>
                   <li class="list-group-item font-weight-bold">Proprietary Software upskill</li>
                   <li class="list-group-item font-weight-bold">Open Source Software upskill</li>
                   <li class="list-group-item font-weight-bold">ETL tools upskill e.g. FME</li>
                   <li class="list-group-item font-weight-bold">Coding skills</li>
-                  <li class="list-group-item font-weight-bold">Geospatial Architecture Review</li>
+                  <li class="list-group-item font-weight-bold">Geospatial Architecture Reviews</li>
                 </ul>
               </div>
             </div>
@@ -80,16 +86,19 @@
     </div>
 
     <!-- What we offer End -->
-    <p class="lead m-4 font-weight-bold">
-        Hover cursor over map or click on some countries to see D3 and topojson geospatial data rendered responsivly in your browser.  
-      </p>
-    <div class="container">
+
+      <!--<div class="row">
+        <div class="col-12" id="map">
+      </div>
+        </div>
+      <div class="container">
+      
 
       <div class="row">
-        <div class="col" id="map">
+        <div class="col-12" id="map">
         </div>
       </div>
-    </div>
+    </div>-->
 
     <h1 class="display-4 m-4">Trusted by professionals</h1>
 
@@ -98,7 +107,7 @@
     </p>
 
 
-    <h1 class="display-4 m-4">Examples of our work</h1>
+    <h1 class="display-4 m-4" id="OurWork">Examples of our work</h1>
 
     <p class="lead m-4">
         Explore a few of our recent projects below.
@@ -108,7 +117,7 @@
         <div class="card-body">
             <h1><i class="fas fa-binoculars d-flex justify-content-center"></i></h1>
           <h5 class="card-title">Mobile Application for Biodiversity Assessors NSW</h5>
-          <p class="card-text">We developed a mobile collection application to collect, store, analyse and report on iportant biodiversity indicators. Biodiversity Assessors use the app to record important field information that was previously collected in a non digital format. The app runs complex queries to search, match PCTs and provide insights for the user. </p>
+          <p class="card-text">We developed a mobile collection application to collect, store, analyse and report on important biodiversity indicators. Biodiversity Assessors use the app to record information on a mobile device that was previously collected in a non digital format. The app runs complex queries to search, match PCTs and provide insights for the user. </p>
           <ul class="list-group list-group-flush">
             <li class="list-group-item font-weight-bold">Geojson Web API</li>
             <li class="list-group-item font-weight-bold">Python Framework</li>

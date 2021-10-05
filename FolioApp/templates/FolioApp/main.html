@@ -23,10 +23,26 @@
 
 
         {% endblock %}
-        <br>
-        <div class="d-flex justify-content-center">
-            <h4>Get in touch</h4>
-        </div>
+        <div id="contact">
+            <br>
+            <div class="d-flex justify-content-center">
+                <h3>Get in touch with our GIS professionals today</h3>
+                <br>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h1 class="display-4"><i class="fas fa-envelope"></i> hello@apstatial.com.au</h1>
+                <br>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h3 class="display-4"><i class="fas fa-phone"></i> 0423 676 646</h3>
+                <br>
+            </div>
+            <div class="d-flex justify-content-center">
+                <p><i class="far fa-copyright"></i> AP Spatial </p>   
+                <br>
+            </div>
+        </div>  
+
         <br>
     </div>
 
@@ -71,7 +87,7 @@
 
             //console.log(countries)
 
-            var projection = d3.geoOrthographic() // pick projection here geoBoggs geoCraig geoFoucaut
+            var projection = d3.geoFoucaut() // pick projection here geoOrthographic geoBoggs geoCraig geoFoucaut
                 //.fitExtent([[20, 20],[960,600]], countries);
                 .fitExtent([[margin, margin],[width-margin, height - margin]], countries)
                 //.clipAngle(90);
@@ -101,23 +117,18 @@
                             .style("fill", "black");
                 })
                 
-
             //create graticles
-            //const graticule = d3.geoGraticule();
-            //console.log(graticule.lines())
+            const graticule = d3.geoGraticule();
+            console.log(graticule.outline())
 
             // Graticule lines (behind the land)
-            //svg.selectAll("path")
-                //.data(graticule.lines())
-                //.enter().append("path")
-                //.attr("d", pathGenerator)
-                //.attr("class", "graticule");
-                
+            svg.selectAll(".graticule")
+                .data(graticule.lines())
+                .enter().append("path")
+                .attr("class", "graticule")
+                .attr("d", pathGenerator);
 
-            //svg.append("path")
-                //.datum(graticule.outline)
-                //.attr("class", "graticule-outline")
-                //.attr("d", pathGenerator);      
+   
 
             let rotate = [0, 0];
             let velocity = [0.05, 0];
@@ -140,8 +151,9 @@
                     //projection.rotate.rotate([0, 0]);
                     //console.log(projection.rotate)
                     // update layers position and redraw
+                    svg.selectAll("path.graticule").attr("d", pathGenerator);
                     svg.selectAll("path.countries").attr("d", pathGenerator);
-                    //svg.selectAll("path.graticule").attr("d", pathGenerator);
+                    
                     //svg.selectAll("path.graticule-outline").attr("d", pathGenerator);
 
                 })};

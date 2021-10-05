@@ -1,6 +1,10 @@
 #logo {
     }
 
+html{
+    scroll-behavior: smooth;
+    }       
+
 .list-group-item {
     background-color:  rgb(248, 244, 237);
     
@@ -23,6 +27,6 @@ card {
 */
 
 path.graticule {
-    stroke: #6e6363;
+    stroke: #8d89895b;
     fill: none;
 }
